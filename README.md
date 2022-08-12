@@ -44,7 +44,7 @@ use passionfruit;
 
 fn main() {
     let download = futures::executor::block_on(
-        passionfruit::Download::new("https://imgur.com/t/meme/8TfWvYh").start(),
+        passionfruit::Download::new("https://i.imgur.com/8iiChzd.jpeg").start(),
     );
 
     match download {
