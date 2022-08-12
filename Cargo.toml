@@ -1,0 +1,19 @@
+[package]
+name = "passionfruit"
+description = "An image downloader package with automatic file extension appendage."
+version = "1.0.0"
+rust-version = "1.62.1"
+edition = "2021"
+license = "Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+futures-util = { version = "0.3" }
+directories = { version = "4.0.1" }
+futures = { version = "0.3.21" }
+reqwest = { version = "0.11", features = ["json", "stream"] }
+bindet = { version = "0.3.2", features = ["mime"] }
+tokio = { version = "1", features = ["full"] }
+bytes = { version = "1" }
+mime = { version = "0.3.16"}
