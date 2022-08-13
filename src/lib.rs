@@ -111,16 +111,16 @@ impl Download {
         return &self.bytes;
     }
 
-    pub async fn start(&mut self) -> std::result::Result<Result, crate::error::DownloadError> {
+    pub async fn start(&mut self) -> std::result::Result<Result, DownloadError> {
         match reqwest::get(&self.url).await {
             Err(why) => {
-                panic!(
-                    "{}",
+                return Err(DownloadError::new(
                     crate::error::RequestError::new(
                         why.to_string(),
-                        why.status().unwrap().to_string()
+                        why.status().unwrap().to_string(),
                     )
-                );
+                    .to_string(),
+                ));
             }
             Ok(data) => {
                 let content_length = data.content_length();
