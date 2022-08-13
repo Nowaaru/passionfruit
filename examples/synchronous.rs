@@ -10,7 +10,7 @@ fn main() {
     match download {
         Ok(result) => {
             if let Some(dirs) = directories::UserDirs::new() {
-                result.write_to(dirs.document_dir().unwrap().to_str().unwrap().to_string(), "out".to_string()).unwrap();
+                result.write_to( std::string::String::from(dirs.document_dir().unwrap().to_str().unwrap()), "out".to_string()).unwrap();
             }
         },
 
