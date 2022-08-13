@@ -61,9 +61,7 @@ impl Result {
                     }
                 },
 
-                Err(val) => {
-                    panic!("An unknown error occured: {}", val);
-                }
+                Err(val) => panic!("{}", format!("An unexpected error occured: {}", val)),
             },
         };
     }
@@ -72,21 +70,24 @@ impl Result {
         &self,
         path: std::string::String,
         name: std::string::String,
-    ) -> std::result::Result<(), ()> {
+    ) -> std::result::Result<(), DownloadError> {
         let path = std::path::Path::new(&path).join(format!("{}.{}", name, self.extension));
         match std::fs::File::create(&path) {
             Ok(mut file) => {
                 if let Ok(()) = file.write_all(&self.bytes) {
-                    println!(
-                        "Downloaded and written to \"{}\".",
-                        path.to_string_lossy().to_string()
-                    );
                     return Ok(());
                 }
 
-                panic!("An error occured whilst writing to file.")
+                return Err(DownloadError::new(
+                    "An error occured whilst writing to file.".to_string(),
+                ));
             }
-            Err(why) => panic!("Failed to write file: {}", why.to_string()),
+            Err(why) => {
+                return Err(DownloadError::new(format!(
+                    "Failed to write file: {}",
+                    why.to_string()
+                )))
+            }
         };
     }
 }
@@ -157,4 +158,3 @@ impl Download {
         }
     }
 }
-
